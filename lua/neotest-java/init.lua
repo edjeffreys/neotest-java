@@ -3,11 +3,8 @@ local utils = require("neotest.utils")
 local logger = require("neotest.logging")
 local gradle_results = require("neotest-java.collect_gradle_results")
 
----@type neotest.Adapter
-local JavaNeotestAdapter = { name = "neotest-java" }
-
 local gradle = vim.fs.find({ "gradlew", "gradle" }, { upward = true })[1]
-logger.debug("Java executable: ", gradle)
+logger.debug("Gradle executable: ", gradle)
 local projectRoot = vim.fs.dirname(vim.fs.find({ "build.gradle", "build.gradle.kts" }, { upward = true })[1])
 
 local function match_root_pattern(...)
@@ -16,6 +13,9 @@ local function match_root_pattern(...)
 		return vim.fs.dirname(vim.fs.find(patterns, { upward = true, path = start_path })[1])
 	end
 end
+
+---@type neotest.Adapter
+local JavaNeotestAdapter = { name = "neotest-java" }
 
 JavaNeotestAdapter.root = match_root_pattern("build.gradle", "build.gradle.kts")
 

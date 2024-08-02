@@ -45,7 +45,7 @@ return function(build_spec, _, tree)
 	local gradle_test_reports = parse_xml(build_spec.context.test_results_dir)
 
 	for _, report in pairs(gradle_test_reports) do
-		for _, test_case in pairs((report.testsuite or {}).testcase) do
+		for _, test_case in pairs(report.testsuite.testcase) do
 			local position = get_position_for_test_case(tree, test_case._attr.name)
 			if position ~= nil then
 				results[position.id] = {
